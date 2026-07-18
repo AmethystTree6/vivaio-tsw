@@ -19,9 +19,11 @@ public class Indirizzo {
 
     private String tipo;
 
+    private Utente utente;
+
     public Indirizzo() {}
 
-    public Indirizzo(int idIndirizzo, String via, String numeroCivico, String citta, String cap, String provincia, String paese, String tipo) {
+    public Indirizzo(int idIndirizzo, String via, String numeroCivico, String citta, String cap, String provincia, String paese, String tipo,Utente utente) {
         this.idIndirizzo = idIndirizzo;
         this.via = via;
         this.numeroCivico = numeroCivico;
@@ -30,6 +32,7 @@ public class Indirizzo {
         this.provincia = provincia;
         this.paese = paese;
         this.tipo = tipo;
+        this.utente = utente;
     }
 
     public String getTipo() {
@@ -103,6 +106,14 @@ public class Indirizzo {
         return idIndirizzo == indirizzo.idIndirizzo && Objects.equals(via, indirizzo.via) && Objects.equals(numeroCivico, indirizzo.numeroCivico) && Objects.equals(citta, indirizzo.citta) && Objects.equals(cap, indirizzo.cap) && Objects.equals(provincia, indirizzo.provincia) && Objects.equals(paese, indirizzo.paese) && Objects.equals(tipo, indirizzo.tipo);
     }
 
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(idIndirizzo, via, numeroCivico, citta, cap, provincia, paese, tipo);
@@ -121,4 +132,6 @@ public class Indirizzo {
                 ", tipo='" + tipo + '\'' +
                 '}';
     }
+
+
 }

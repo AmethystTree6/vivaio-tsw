@@ -11,14 +11,17 @@ public class DettaglioOrdine {
 
     private double prezzoUnitario;
 
+    private Ordine ordine;
+
     public DettaglioOrdine() {
     }
 
-    public DettaglioOrdine(int idDettaglio, Pianta pianta, int quantita, double prezzoUnitario) {
+    public DettaglioOrdine(int idDettaglio, Pianta pianta, int quantita, double prezzoUnitario, Ordine ordine) {
         this.idDettaglio = idDettaglio;
         this.pianta = pianta;
         this.quantita = quantita;
         this.prezzoUnitario = prezzoUnitario;
+        this.ordine = ordine;
     }
 
     public int getIdDettaglio() {
@@ -53,6 +56,14 @@ public class DettaglioOrdine {
         this.prezzoUnitario = prezzoUnitario;
     }
 
+    public Ordine getOrdine() {
+        return ordine;
+    }
+
+    public void setOrdine(Ordine ordine) {
+        this.ordine = ordine;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -74,4 +85,6 @@ public class DettaglioOrdine {
                 ", prezzoUnitario=" + prezzoUnitario +
                 '}';
     }
+
+
 }
