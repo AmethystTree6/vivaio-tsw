@@ -1,0 +1,166 @@
+/* Reset globale */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* NAVBAR STRUTTURA */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1b5e20; /* Verde bosco scuro */
+    padding: 15px 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-logo a {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* BARRA DI RICERCA */
+.nav-search form {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 400px;
+}
+
+.nav-search input {
+    border: none;
+    padding: 10px 15px;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+}
+
+.nav-search .search-btn {
+    background: none;
+    border: none;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* LINK DESTRI */
+.nav-links {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #a5d6a7;
+}
+
+.cart-count {
+    background-color: #ff6f00;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 7px;
+}
+
+/* ========================================================
+   GESTIONE MENU A TENDINA (DROPDOWN)
+   ======================================================== */
+
+/* Il contenitore dell'account deve avere la posizione relativa */
+.user-dropdown-container {
+    position: relative;
+}
+
+/* La tendina è inizialmente NASCOSTA e posizionata sotto l'icona */
+.user-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    padding: 20px;
+    border-radius: 4px;
+    margin-top: 10px;
+    z-index: 1050;
+}
+
+/* IL TRUCCO: Quando passi il mouse sopra il tasto Account, la tendina appare */
+.user-dropdown-container:hover .user-dropdown-menu {
+    display: block;
+}
+
+/* Stile del Form dentro la tendina */
+.user-dropdown-menu h3 {
+    color: #1b5e20;
+    margin-bottom: 12px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.dropdown-form-group {
+    margin-bottom: 10px;
+}
+
+.user-dropdown-menu input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    color: #333;
+}
+
+.dropdown-login-btn {
+    width: 100%;
+    background-color: #1b5e20;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.dropdown-login-btn:hover {
+    background-color: #2e7d32;
+}
+
+.dropdown-divider {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.dropdown-text {
+    font-size: 13px;
+    color: #555;
+    text-align: center;
+}
+
+.dropdown-text a {
+    color: #1b5e20 !important;
+    display: inline !important;
+    font-weight: bold;
+}
