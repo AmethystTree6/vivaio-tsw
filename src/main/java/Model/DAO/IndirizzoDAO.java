@@ -6,7 +6,7 @@ import Model.Beans.Utente;
 import java.util.List;
 
 public class IndirizzoDAO {
-
+/*
     public void doSave(Indirizzo indirizzo){
 
     }
@@ -27,5 +27,5 @@ public class IndirizzoDAO {
 
     }
 
-
+*/
 }

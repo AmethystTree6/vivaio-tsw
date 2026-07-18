@@ -7,7 +7,7 @@ import java.util.List;
 
 public class OrdineDAO {
 
-    public void doSave(Ordine ordine){
+  /*  public void doSave(Ordine ordine){
 
     }
 
@@ -19,11 +19,13 @@ public class OrdineDAO {
 
     }
 
-    public List<Ordine> doRetrieveByUtente(Utente utente){
+  /*  public List<Ordine> doRetrieveByUtente(Utente utente){
 
     }
 
     public List<Ordine> doRetrieveByID(int id){
 
     }
+
+   */
 }

@@ -1,10 +1,10 @@
 package Model.DAO;
-import
+
 import Model.Beans.Utente;
 
 import java.util.List;
 
-public class UtenteDAO {
+public class UtenteDAO {/*
 
     public void doSave(Utente utente){
 
@@ -29,6 +29,5 @@ public class UtenteDAO {
     public List<Utente> doRetrieveByEmail(String Email){
 
     }
-
-
+*/
 }

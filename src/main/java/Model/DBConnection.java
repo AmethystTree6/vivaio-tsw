@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -16,7 +17,7 @@ public class DBConnection {
         }
     }
 
-    public static DBConnection getConnection() throws SQLException {
-        return (DBConnection) DriverManager.getConnection(URL, USER, PASSWORD);
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
