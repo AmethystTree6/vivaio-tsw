@@ -3,7 +3,7 @@ package Model;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Connection {
+public class DBConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/Vivaio";
     private static final String USER = "root";
     private static final String PASSWORD = "TiEsseVu";
@@ -16,7 +16,7 @@ public class Connection {
         }
     }
 
-    public static Connection getConnection() throws SQLException {
-        return (Connection) DriverManager.getConnection(URL, USER, PASSWORD);
+    public static DBConnection getConnection() throws SQLException {
+        return (DBConnection) DriverManager.getConnection(URL, USER, PASSWORD);
     }
 }
