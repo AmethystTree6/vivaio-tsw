@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/navbar.jspvbar.jsp" />
+<jsp:include page="/WEB-INF/jsp/navbar.jsp" />
 
 <main class="container">
     <h1 class="page-title">Il tuo Carrello</h1>
