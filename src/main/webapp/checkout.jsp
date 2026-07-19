@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/navbar.jsp" />
+<jsp:include page="/WEB-INF/navbar.jspvbar.jsp" />
 
 <main class="container" style="max-width: 600px; margin-top: 40px;">
     <h1 class="page-title" style="color: #1b5e20; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">Completamento Ordine</h1>
@@ -68,6 +68,6 @@
     </div>
 </main>
 
-<script src="js/login.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

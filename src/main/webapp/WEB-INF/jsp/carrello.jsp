@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>VivaioMente - Il tuo Carrello</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
 </head>
 <body>
 
-<jsp:include page="/WEB-INF/jsp/navbar.jsp" />
+<jsp:include page="/WEB-INF/navbar.jspvbar.jsp" />
 
 <main class="container">
     <h1 class="page-title">Il tuo Carrello</h1>
@@ -58,6 +58,6 @@
     </div>
 </main>
 
-<script src="js/login.js"></script>
+<script src="../../js/main.js"></script>
 </body>
 </html>

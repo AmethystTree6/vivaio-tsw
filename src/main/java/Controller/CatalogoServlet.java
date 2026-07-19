@@ -43,8 +43,7 @@ public class CatalogoServlet extends HttpServlet {
 
         request.setAttribute("prodotti", piante);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/catalogo.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/catalogo.jsp");        dispatcher.forward(request, response);
     }
 
     @Override

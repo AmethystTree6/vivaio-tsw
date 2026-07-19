@@ -19,7 +19,6 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Il form della navbar invia il parametro "email"
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
@@ -27,13 +26,11 @@ public class LoginServlet extends HttpServlet {
         boolean isAjax = "XMLHttpRequest".equals(xRequestedWith);
 
         UtenteDAO dao = new UtenteDAO();
-        // Chiamata al metodo reale del tuo collega
         Utente utente = dao.doRetrieveByEmail(email);
 
-        // Verifica delle credenziali (confronto con password_hash memorizzata nel DB)
+        // Verifica delle credenziali con hash db
         if (utente != null && utente.getPasswordHash() != null && utente.getPasswordHash().equals(password)) {
             HttpSession session = request.getSession();
-            // Salva l'utente in sessione con la chiave concordata "cliente"
             session.setAttribute("cliente", utente);
 
             if (isAjax) {

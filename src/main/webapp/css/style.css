@@ -1,17 +1,67 @@
-/* Reset globale */
+
+:root { /* in questa sezione andiamo a dichiarare tutti i pezzi che ripeteremo spesso o*/
+    /* Colori */
+    --primary-color: #1b5e20;     /* Verde bosco */
+    --primary-light: #2e7d32;     /* Verde hover */
+    --primary-hover: #a5d6a7;     /* Verdino chiaro per i link */
+    --accent-color: #ff6f00;      /* Arancione carrello */
+    --bg-light: #f9f9f9;          /* Sfondo pagine */
+    --text-main: #333333;
+    --text-muted: #555555;
+    --border-color: #dddddd;
+    --white: #ffffff;
+
+    /* Font e Spaziature */
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --transition-speed: 0.2s;
+    --border-radius: 4px;
+}
+
+/* REGOLE BASE GLOBALI */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-main);
 }
 
-/* NAVBAR STRUTTURA */
+body {
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Classe contenitore generica (mantiene i contenuti centrati su grandi schermi) */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Bottone Globale  */
+.btn {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-speed);
+}
+
+.btn:hover {
+    background-color: var(--primary-light);
+}
+
+/* NAVBAR */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1b5e20; /* Verde bosco scuro */
+    background-color: var(--primary-color);
     padding: 15px 30px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     position: sticky;
@@ -20,20 +70,28 @@
 }
 
 .nav-logo a {
-    color: #ffffff;
+    color: var(--white);
     font-size: 24px;
     font-weight: bold;
     text-decoration: none;
 }
 
 /* BARRA DI RICERCA */
-.nav-search form {
+.nav-search {
+    flex-grow: 1; /* Permette alla barra di occupare lo spazio disponibile */
+    display: flex;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.nav-search form { /*Fatta in questo modo ci permette di renderla flessibile*/
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    border-radius: 4px;
+    background-color: var(--white);
+    border-radius: var(--border-radius);
     overflow: hidden;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .nav-search input {
@@ -50,9 +108,10 @@
     padding: 0 15px;
     cursor: pointer;
     font-size: 16px;
+    color: var(--text-main);
 }
 
-/* LINK DESTRI */
+/* LINK  */
 .nav-links {
     display: flex;
     list-style: none;
@@ -61,58 +120,54 @@
 }
 
 .nav-links a {
-    color: #ffffff;
+    color: var(--white);
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    transition: color 0.2s;
+    transition: color var(--transition-speed);
 }
 
 .nav-links a:hover {
-    color: #a5d6a7;
+    color: var(--primary-hover);
 }
 
 .cart-count {
-    background-color: #ff6f00;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--white);
     font-size: 12px;
     font-weight: bold;
     border-radius: 50%;
     padding: 2px 7px;
+    position: relative;
+    top: -5px; /* Alza leggermente il badge */
 }
 
-/* ========================================================
-   GESTIONE MENU A TENDINA (DROPDOWN)
-   ======================================================== */
-
-/* Il contenitore dell'account deve avere la posizione relativa */
+/*  GESTIONE MENU A TENDINA (DROPDOWN) */
 .user-dropdown-container {
     position: relative;
 }
 
-/* La tendina è inizialmente NASCOSTA e posizionata sotto l'icona */
 .user-dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: #ffffff;
+    background-color: var(--white);
     min-width: 260px;
     box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
     padding: 20px;
-    border-radius: 4px;
-    margin-top: 10px;
+    border-radius: var(--border-radius);
+    margin-top: 0px;
     z-index: 1050;
+    color: var(--text-main);
 }
 
-/* IL TRUCCO: Quando passi il mouse sopra il tasto Account, la tendina appare */
 .user-dropdown-container:hover .user-dropdown-menu {
     display: block;
 }
 
-/* Stile del Form dentro la tendina */
 .user-dropdown-menu h3 {
-    color: #1b5e20;
+    color: var(--primary-color);
     margin-bottom: 12px;
     font-size: 18px;
     text-align: center;
@@ -125,42 +180,55 @@
 .user-dropdown-menu input {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     outline: none;
-    color: #333;
 }
 
 .dropdown-login-btn {
     width: 100%;
-    background-color: #1b5e20;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.dropdown-login-btn:hover {
-    background-color: #2e7d32;
 }
 
 .dropdown-divider {
     margin: 15px 0;
     border: 0;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
 }
 
 .dropdown-text {
     font-size: 13px;
-    color: #555;
+    color: var(--text-muted);
     text-align: center;
 }
 
 .dropdown-text a {
-    color: #1b5e20 !important;
-    display: inline !important;
+    color: var(--primary-color);
     font-weight: bold;
+    text-decoration: none;
+}
+
+/* ZONA RESPONSIVE  */
+@media screen and (max-width: 768px) {
+    /* La navbar diventa a blocchi verticali invece che in riga */
+    .navbar {
+        flex-wrap: wrap;
+        padding: 10px 15px;
+    }
+
+    /* La barra di ricerca va sotto il logo e prende tutto lo spazio */
+    .nav-search {
+        order: 3; /* Sposta l'elemento per ultimo */
+        width: 100%;
+        margin-top: 15px;
+        padding: 0;
+    }
+
+    .nav-search form {
+        max-width: 100%;
+    }
+
+    /* Riduciamo lo spazio tra i link */
+    .nav-links {
+        gap: 15px;
+    }
 }
