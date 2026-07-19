@@ -1,11 +1,11 @@
 
 :root { /* in questa sezione andiamo a dichiarare tutti i pezzi che ripeteremo spesso o*/
     /* Colori */
-    --primary-color: #1b5e20;     /* Verde bosco */
-    --primary-light: #2e7d32;     /* Verde hover */
-    --primary-hover: #a5d6a7;     /* Verdino chiaro per i link */
-    --accent-color: #ff6f00;      /* Arancione carrello */
-    --bg-light: #f9f9f9;          /* Sfondo pagine */
+    --primary-color: #A1E6A6;     /* Verde bosco */
+    --primary-light: #BAF0A8;     /* Verde hover */
+    --primary-hover: #C3D9A3;     /* Verdino chiaro per i link */
+    --accent-color: #E6E0A1;      /* Arancione carrello */
+    --bg-light: #ECF0A8;          /* Sfondo pagine */
     --text-main: #333333;
     --text-muted: #555555;
     --border-color: #dddddd;
@@ -230,5 +230,109 @@ body {
     /* Riduciamo lo spazio tra i link */
     .nav-links {
         gap: 15px;
+    }
+
+
+    /*ZONA CARRELLO*/
+
+    .cart-container {
+        background-color: #ffffff;
+        padding: 25px;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        margin-bottom: 30px;
+    }
+
+    .cart-table thead tr {
+        border-bottom: 2px solid #eeeeee;
+        color: #1b5e20;
+        font-weight: bold;
+    }
+
+    .cart-table th {
+        padding: 12px 8px;
+    }
+
+    .cart-table tbody tr {
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .cart-table td {
+        padding: 15px 8px;
+    }
+
+    .cart-product-cell {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-weight: 600;
+        color: #333333;
+    }
+
+    .cart-thumbnail {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .cart-price {
+        color: #555555;
+    }
+
+    .cart-qty-input {
+        width: 50px;
+        padding: 5px;
+        text-align: center;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+
+    .cart-item-total {
+        text-align: right;
+        font-weight: 600;
+        color: #2e7d32;
+    }
+
+    .cart-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #eeeeee;
+        padding-top: 20px;
+    }
+
+    .back-to-shopping {
+        color: #1b5e20;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .cart-total-text {
+        font-size: 16px;
+        color: #555555;
+        margin-bottom: 10px;
+    }
+
+    .cart-total-amount {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2e7d32;
+        margin-left: 10px;
+    }
+
+    .cart-empty-message {
+        text-align: center;
+        padding: 50px;
     }
 }

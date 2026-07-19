@@ -7,7 +7,7 @@
 <body>
 
 <!-- Inclusione della Navbar -->
-<jsp:include page="/WEB-INF/navbar.jspvbar.jsp" />
+<jsp:include page="/WEB-INF/jsp/navbar.jsp" />
 
 <main class="container" style="max-width: 600px; margin-top: 50px;">
     <h1 class="page-title" style="text-align: center;">Area Utente</h1>

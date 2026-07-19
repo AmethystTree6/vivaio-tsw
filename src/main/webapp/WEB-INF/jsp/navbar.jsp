@@ -26,12 +26,11 @@
 
         <!-- CARRELLO -->
         <li>
-            <a href="${ctx}/carrello">
-                Carrello
+            <a href="${ctx}/Carrello">Carrello
                 <!-- Calcoliamo gli elementi nel carrello in sessione -->
-                <c:set var="cartSize" value="${empty sessionScope.carrello ? 0 : sessionScope.carrello.size()}" />
+                <c:set var="cartSize" value="${empty sessionScope.carrello ? 0 : sessionScope.carrello.numeroArticoli}" />
 
-                <!-- ID cart-badge serve al nostro futuro script AJAX per aggiornare il numero! -->
+                <!-- ID cart-badge serve al nostro script AJAX per aggiornare il numero! -->
                 <span class="cart-count" id="cart-badge" style="display: ${cartSize > 0 ? 'inline-block' : 'none'};">
                     ${cartSize}
                 </span>
@@ -106,3 +105,4 @@
     <!-- Aggiungo anche qui lo script di js per metterlo in tutto il sito -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
 </nav>
+<div id="toast-cart"></div>

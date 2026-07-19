@@ -100,35 +100,34 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function aggiungiAlCarrello(idPianta) {
-    // Prepariamo i parametri da inviare (simuliamo un piccolo form invisibile)
     const params = new URLSearchParams();
     params.append('action', 'aggiungi');
     params.append('id', idPianta);
 
-    // Facciamo la chiamata alla Servlet in modo invisibile
     fetch('GestioneCarrello', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: params.toString()
     })
-        .then(response => response.json()) // Trasformiamo la risposta in un oggetto JavaScript
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Successo! Mostriamo un feedback all'utente
-                alert("🌱 Pianta aggiunta con successo!\nTotale articoli nel carrello: " + data.numeroArticoli);
+                // Troviamo il div invisibile
+                const toast = document.getElementById("toast-cart");
+                // Scriviamo il messaggio
+                toast.innerText = "🌱 Aggiunto! Totale articoli: " + data.numeroArticoli;
+                // Lo facciamo apparire
+                toast.classList.add("toast-show");
 
-                // BONUS: Se hai un pallino col numero sul carrello nella navbar, si aggiornerebbe così:
-                // let badge = document.getElementById('cart-badge');
-                // if(badge) badge.innerText = data.numeroArticoli;
+                // Lo facciamo sparire dopo 3 secondi (3000 millisecondi)
+                setTimeout(function(){
+                    toast.classList.remove("toast-show");
+                }, 3000);
+
             } else {
-                // La Servlet ha restituito un errore (es. pianta non trovata)
-                alert("⚠️ Errore: " + data.errore);
+                console.error(data.errore);
             }
         })
-        .catch(error => {
-            console.error('Errore di comunicazione col server:', error);
-            alert("⚠️ Errore di comunicazione col server.");
-        });
+        .catch(error => console.error('Errore:', error));
+
 }

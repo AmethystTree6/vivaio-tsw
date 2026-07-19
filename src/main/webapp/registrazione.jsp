@@ -35,7 +35,7 @@
 <body>
 
 <!-- NAVBAR -->
-<%@ include file="jsp/navbar.jsp" %>
+<%@ include file="WEB-INF/jsp/navbar.jsp" %>
 
 <main class="container">
     <div class="auth-container">
