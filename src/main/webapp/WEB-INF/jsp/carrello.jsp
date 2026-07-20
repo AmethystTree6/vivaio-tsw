@@ -52,8 +52,26 @@
                             <td class="cart-price">
                                 <fmt:formatNumber value="${item.pianta.prezzo}" type="currency" currencySymbol="€"/>
                             </td>
+                            <!-- Cella Quantità con i pulsanti + e - -->
                             <td style="text-align: center;">
-                                <input type="number" value="${item.quantita}" min="1" readonly class="cart-qty-input">
+                                <div style="display: flex; align-items: center; justify-content: center; gap: 5px;">
+                                    <button type="button" onclick="modificaQuantita(${item.pianta.idPianta}, -1)"
+                                            style="cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; background: #fff; border-radius: 4px;">-</button>
+
+                                    <input type="number" value="${item.quantita}" readonly class="cart-qty-input" style="width: 40px; margin: 0;">
+
+                                    <button type="button" onclick="modificaQuantita(${item.pianta.idPianta}, 1)"
+                                            style="cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; background: #fff; border-radius: 4px;">+</button>
+                                </div>
+                            </td>
+
+                            <!-- Cella Totale con il tasto Cestino -->
+                            <td class="cart-item-total">
+                                <fmt:formatNumber value="${item.prezzoTotale}" type="currency" currencySymbol="€"/>
+
+                                <button type="button" onclick="rimuoviProdotto(${item.pianta.idPianta})"
+                                        style="margin-left: 15px; color: #d32f2f; background: none; border: none; cursor: pointer; font-size: 18px;"
+                                        title="Rimuovi dal carrello">🗑️</button>
                             </td>
                             <td class="cart-item-total">
                                 <fmt:formatNumber value="${item.prezzoTotale}" type="currency" currencySymbol="€"/>

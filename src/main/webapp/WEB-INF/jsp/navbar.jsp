@@ -87,7 +87,7 @@
                             </c:if>
 
                             <li><a href="${ctx}/profilo" style="color: var(--text-main);">👤 I miei dati</a></li>
-                            <li><a href="${ctx}/ordini" style="color: var(--text-main);">📦 I miei ordini</a></li>
+                            <li><a href="${ctx}/StoricoOrdini" style="color: var(--text-main);">📦 I miei ordini</a></li>
 
                             <li>
                                 <hr class="dropdown-divider">

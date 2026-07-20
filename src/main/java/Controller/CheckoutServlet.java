@@ -1,40 +1,53 @@
 package Controller;
 
+import Model.Beans.Carrello;
 import Model.Beans.Utente;
+import Model.DAO.OrdineDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/Checkout")
 public class CheckoutServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        // Recuperiamo l'oggetto utente usando il Bean corretto (Utente)
-        Utente utenteLoggato = (Utente) session.getAttribute("cliente");
-
-        if (utenteLoggato == null) {
-            // Se l'utente non è loggato, lo rimbalziamo al login inserendo un messaggio di errore
-            request.setAttribute("messaggioErrore", "Accedi al tuo account personale per poter completare l'acquisto.");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
-        } else {
-            // Se è loggato, può procedere alla pagina di checkout reale
-            request.getRequestDispatcher("/checkout.jsp").forward(request, response);
+        //Check login utente
+        Utente utente = (Utente) session.getAttribute("cliente");
+        if (utente == null) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
         }
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
+        //Recupero del carrello, se vuoto si ritorna al catalogo
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
+        if (carrello == null || carrello.getNumeroArticoli() == 0) {
+            response.sendRedirect(request.getContextPath() + "/Catalogo");
+            return;
+        }
+
+        //Salvataggio in db
+        OrdineDAO ordineDAO = new OrdineDAO();
+        try {
+            ordineDAO.salvaOrdineCompleto(utente.getIdUtente(), carrello);
+
+            session.removeAttribute("carrello");
+
+            request.getRequestDispatcher("/WEB-INF/jsp/grazie.jsp").forward(request, response);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("errore", "Si è verificato un problema durante la registrazione dell'ordine.");
+            request.getRequestDispatcher("/WEB-INF/jsp/carrello.jsp").forward(request, response);
+        }
     }
 }

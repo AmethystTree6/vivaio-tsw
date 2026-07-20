@@ -28,8 +28,8 @@
             <h2 style="color: #1b5e20; font-size: 20px; margin-bottom: 20px;">Accedi al tuo profilo</h2>
 
             <div class="dropdown-form-group" style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-size: 14px; color: #333;">Username o Email</label>
-                <input type="text" name="username" placeholder="Inserisci il tuo username" required style="width: 100%; padding: 10px; border: 1px solid #cccccc; border-radius: 4px;">
+                <label style="display: block; margin-bottom: 5px; font-size: 14px; color: #333;">Email</label>
+                <input type="email" name="email" placeholder="Inserisci la tua email" required style="width: 100%; padding: 10px; border: 1px solid #cccccc; border-radius: 4px;">
             </div>
 
             <div class="dropdown-form-group" style="margin-bottom: 20px;">

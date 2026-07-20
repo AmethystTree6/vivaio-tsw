@@ -39,4 +39,21 @@ public class Carrello {
         }
         return totale;
     }
+    public void rimuoviPianta(int idPianta) {
+        articoli.removeIf(item -> item.getPianta().getIdPianta() == idPianta);
+    }
+
+    public void aggiornaQuantita(int idPianta, int variazione) {
+        for (ItemCarrello item : articoli) {
+            if (item.getPianta().getIdPianta() == idPianta) {
+                int nuovaQuantita = item.getQuantita() + variazione;
+                if (nuovaQuantita <= 0) {
+                    rimuoviPianta(idPianta); // Se arriva a 0, elimino la pianta
+                } else {
+                    item.setQuantita(nuovaQuantita);
+                }
+                return;
+            }
+        }
+    }
 }

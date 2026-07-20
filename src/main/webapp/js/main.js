@@ -130,4 +130,43 @@ function aggiungiAlCarrello(idPianta) {
         })
         .catch(error => console.error('Errore:', error));
 
+
+}
+function modificaQuantita(idPianta, variazione) {
+    const params = new URLSearchParams();
+    params.append('action', 'modifica');
+    params.append('id', idPianta);
+    params.append('variazione', variazione); // +1 o -1
+
+    fetch('GestioneCarrello', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+    })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                location.reload(); // Ricarica la pagina istantaneamente per aggiornare i prezzi
+            }
+        });
+}
+
+function rimuoviProdotto(idPianta) {
+    if (!confirm("Sei sicuro di voler rimuovere questa pianta dal carrello?")) return;
+
+    const params = new URLSearchParams();
+    params.append('action', 'rimuovi');
+    params.append('id', idPianta);
+
+    fetch('GestioneCarrello', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: params.toString()
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload(); // Ricarica la pagina istantaneamente
+            }
+        });
 }

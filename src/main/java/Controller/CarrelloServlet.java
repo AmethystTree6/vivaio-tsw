@@ -53,6 +53,18 @@ public class CarrelloServlet extends HttpServlet {
                 } else {
                     out.print("{\"success\": false, \"errore\": \"Pianta non trovata nel database\"}");
                 }
+            }else if ("modifica".equals(action)) {
+                int idPianta = Integer.parseInt(request.getParameter("id"));
+                int variazione = Integer.parseInt(request.getParameter("variazione")); // +1 o -1
+
+                carrello.aggiornaQuantita(idPianta, variazione);
+                out.print("{\"success\": true}");
+            }
+            else if ("rimuovi".equals(action)) {
+                int idPianta = Integer.parseInt(request.getParameter("id"));
+
+                carrello.rimuoviPianta(idPianta);
+                out.print("{\"success\": true}");
             }
         } catch (SQLException e) {
             e.printStackTrace();
