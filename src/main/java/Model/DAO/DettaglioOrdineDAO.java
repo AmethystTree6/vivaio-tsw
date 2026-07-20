@@ -133,4 +133,38 @@ public class DettaglioOrdineDAO {
         }
         return dettagli;
     }
+
+    public List<Model.Beans.DettaglioOrdine> getDettagliByOrdine(int idOrdine) throws SQLException {
+        List<Model.Beans.DettaglioOrdine> dettagli = new ArrayList<>();
+
+        String query = "SELECT d.quantita, d.prezzo_unitario, p.id_pianta, p.nome_comune, p.descrizione, p.prezzo " +
+                "FROM Dettaglio_Ordine d " +
+                "JOIN Pianta p ON d.id_pianta = p.id_pianta " +
+                "WHERE d.id_ordine = ?";
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setInt(1, idOrdine);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Model.Beans.DettaglioOrdine dettaglio = new Model.Beans.DettaglioOrdine();
+
+                    // Usiamo i setter esatti della tua classe
+                    dettaglio.setQuantita(rs.getInt("quantita"));
+                    dettaglio.setPrezzoUnitario(rs.getDouble("prezzo_unitario"));
+
+                    Model.Beans.Pianta pianta = new Model.Beans.Pianta();
+                    pianta.setIdPianta(rs.getInt("id_pianta"));
+                    pianta.setNomeComune(rs.getString("nome_comune"));
+                    pianta.setDescrizione(rs.getString("descrizione"));
+                    pianta.setPrezzo(rs.getDouble("prezzo"));
+
+                    dettaglio.setPianta(pianta);
+                    dettagli.add(dettaglio);
+                }
+            }
+        }
+        return dettagli;
+    }
 }
