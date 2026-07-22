@@ -112,26 +112,53 @@ function aggiungiAlCarrello(idPianta) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Troviamo il div invisibile
                 const toast = document.getElementById("toast-cart");
-                // Scriviamo il messaggio
-                toast.innerText = "🌱 Aggiunto! Totale articoli: " + data.numeroArticoli;
-                // Lo facciamo apparire
-                toast.classList.add("toast-show");
+                if (toast) {
+                    // Scriviamo il messaggio
+                    toast.innerText = "🌱 Aggiunto! Totale articoli: " + data.numeroArticoli;
 
-                // Lo facciamo sparire dopo 3 secondi (3000 millisecondi)
-                setTimeout(function(){
-                    toast.classList.remove("toast-show");
-                }, 3000);
+                    // Applicazione stili inline per garantire visibilità e posizionamento fluttuante
+                    toast.style.position = "fixed";
+                    toast.style.bottom = "30px";
+                    toast.style.right = "30px";
+                    toast.style.backgroundColor = "#2e7d32"; // Verde VivaioMente
+                    toast.style.color = "#ffffff";
+                    toast.style.padding = "14px 22px";
+                    toast.style.borderRadius = "8px";
+                    toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+                    toast.style.fontSize = "15px";
+                    toast.style.fontWeight = "bold";
+                    toast.style.zIndex = "9999"; // Stia SOPRA a qualsiasi elemento
+                    toast.style.transition = "opacity 0.3s ease, transform 0.3s ease";
 
+                    // Lo rendiamo visibile
+                    toast.style.display = "block";
+                    toast.style.opacity = "1";
+                    toast.style.transform = "translateY(0)";
+
+                    // Aggiorniamo anche il badge della navbar se presente
+                    const badge = document.getElementById("cart-badge");
+                    if (badge) {
+                        badge.innerText = data.numeroArticoli;
+                        badge.style.display = "inline-block";
+                    }
+
+                    // Scompare animato dopo 3 secondi
+                    setTimeout(function(){
+                        toast.style.opacity = "0";
+                        toast.style.transform = "translateY(10px)";
+                        setTimeout(function() {
+                            toast.style.display = "none";
+                        }, 300); // tempo per completare la dissolvenza
+                    }, 3000);
+                }
             } else {
                 console.error(data.errore);
             }
         })
         .catch(error => console.error('Errore:', error));
-
-
 }
+
 function modificaQuantita(idPianta, variazione) {
     const params = new URLSearchParams();
     params.append('action', 'modifica');

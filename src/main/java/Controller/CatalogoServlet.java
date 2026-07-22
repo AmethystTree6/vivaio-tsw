@@ -1,54 +1,67 @@
-package Controller;
+    package Controller;
 
-import Model.DAO.PiantaDAO;
-import Model.Beans.Pianta;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+    import Model.Beans.Categoria;
+    import Model.Beans.PiantaFilter;
+    import Model.DAO.CategoriaDAO;
+    import Model.DAO.PiantaDAO;
+    import Model.Beans.Pianta;
+    import jakarta.servlet.RequestDispatcher;
+    import jakarta.servlet.ServletException;
+    import jakarta.servlet.annotation.WebServlet;
+    import jakarta.servlet.http.HttpServlet;
+    import jakarta.servlet.http.HttpServletRequest;
+    import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
+    import java.io.IOException;
+    import java.sql.SQLException;
+    import java.util.List;
 
-@WebServlet("/Catalogo")
-public class CatalogoServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    @WebServlet("/Catalogo")
+    public class CatalogoServlet extends HttpServlet {
+        private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+        @Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
 
-        PiantaDAO dao = new PiantaDAO();
-        String query = request.getParameter("query");
-        List<Pianta> piante = null;
+            PiantaFilter filter = new PiantaFilter();
+            filter.setQuery(request.getParameter("q"));
+            filter.setEsposizione(request.getParameter("esposizione"));
+            filter.setOrderBy(request.getParameter("orderBy"));
 
-        try {
-            // Gestione obbligatoria dell'eccezione lanciata dai metodi del DAO
-            if (query != null && !query.trim().isEmpty()) {
-                piante = dao.doSearch(query);
-            } else {
-                piante = dao.doRetrieveAll();
+            try {
+                if (request.getParameter("categoria") != null && !request.getParameter("categoria").isEmpty()) {
+                    filter.setIdCategoria(Integer.parseInt(request.getParameter("categoria")));
+                }
+                if (request.getParameter("prezzoMin") != null && !request.getParameter("prezzoMin").isEmpty()) {
+                    filter.setPrezzoMin(Double.parseDouble(request.getParameter("prezzoMin")));
+                }
+                if (request.getParameter("prezzoMax") != null && !request.getParameter("prezzoMax").isEmpty()) {
+                    filter.setPrezzoMax(Double.parseDouble(request.getParameter("prezzoMax")));
+                }
+            } catch (NumberFormatException ignored) {}
+
+            PiantaDAO piantaDAO = new PiantaDAO();
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
+
+            try {
+                List<Pianta> prodotti = piantaDAO.doFilter(filter);
+                List<Categoria> categorie = categoriaDAO.doRetrieveAll();
+
+                request.setAttribute("prodotti", prodotti);
+                request.setAttribute("categorie", categorie);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                request.setAttribute("errore", "Errore nel caricamento dei prodotti.");
             }
-        } catch (SQLException e) {
-            request.setAttribute("errore", "Errore nel database durante il caricamento dei prodotti.");
-            e.printStackTrace();
+
+            request.getRequestDispatcher("/WEB-INF/jsp/catalogo.jsp").forward(request, response);
         }
 
-        if (piante == null || piante.isEmpty()) {
-            request.setAttribute("errore", "Nessun prodotto trovato nel catalogo.");
+        @Override
+        protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+            doGet(request, response);
         }
-
-        request.setAttribute("prodotti", piante);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/catalogo.jsp");        dispatcher.forward(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
-}

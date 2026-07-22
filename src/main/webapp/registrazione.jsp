@@ -65,12 +65,11 @@
                 <!-- Questo span verrà riempito da AJAX -->
                 <div id="email-feedback" class="error-msg">Email già in uso!</div>
             </div>
-
             <div class="form-group">
                 <label for="reg-pwd">Password</label>
-                <!-- pattern forza almeno 8 caratteri, 1 lettera, 1 numero -->
+                <!-- Pattern che accetta QUALSIASI carattere (inclusi simboli e caratteri speciali) -->
                 <input type="password" id="reg-pwd" name="password"
-                       pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
+                       pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
                        title="La password deve contenere almeno 8 caratteri, di cui almeno una lettera e un numero" required>
             </div>
 

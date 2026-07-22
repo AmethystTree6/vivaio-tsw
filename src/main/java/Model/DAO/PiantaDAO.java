@@ -2,8 +2,8 @@ package Model.DAO;
 
 import Model.Beans.Categoria;
 import Model.Beans.Pianta;
+import Model.Beans.PiantaFilter;
 import Model.DBConnection;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,7 +83,7 @@ public class PiantaDAO {
         return piante;
     }
 
-    public synchronized void doInsert(Pianta pianta) throws SQLException {
+    public synchronized boolean doInsert(Pianta pianta) throws SQLException {
         String query = "INSERT INTO Pianta (id_categoria, nome_comune, nome_scientifico, descrizione, prezzo, esposizione, altezza, diametro_vaso, quantita_magazzino, disponibile) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = (Connection) DBConnection.getConnection();
@@ -102,6 +102,7 @@ public class PiantaDAO {
 
             ps.executeUpdate();
         }
+        return false;
     }
 
     public synchronized void doUpdate(Pianta pianta) throws SQLException {
@@ -156,4 +157,83 @@ public class PiantaDAO {
         p.setCategoria(c);
         return p;
     }
-}
+    public List<Pianta> doFilter(PiantaFilter filter) throws SQLException {
+        List<Pianta> piante = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT * FROM Pianta WHERE disponibile = TRUE AND quantita_magazzino > 0");
+
+        if (filter.getQuery() != null && !filter.getQuery().trim().isEmpty()) {
+            sql.append(" AND (LOWER(nome_comune) LIKE LOWER(?) OR LOWER(nome_scientifico) LIKE LOWER(?))");
+        }
+        if (filter.getIdCategoria() != null && filter.getIdCategoria() > 0) {
+            sql.append(" AND id_categoria = ?");
+        }
+        if (filter.getEsposizione() != null && !filter.getEsposizione().trim().isEmpty()) {
+            sql.append(" AND esposizione = ?");
+        }
+        if (filter.getPrezzoMin() != null) {
+            sql.append(" AND prezzo >= ?");
+        }
+        if (filter.getPrezzoMax() != null) {
+            sql.append(" AND prezzo <= ?");
+        }
+
+        // Ordinamento
+        if ("prezzo_asc".equalsIgnoreCase(filter.getOrderBy())) {
+            sql.append(" ORDER BY prezzo ASC");
+        } else if ("prezzo_desc".equalsIgnoreCase(filter.getOrderBy())) {
+            sql.append(" ORDER BY prezzo DESC");
+        } else if ("nome".equalsIgnoreCase(filter.getOrderBy())) {
+            sql.append(" ORDER BY nome_comune ASC");
+        } else {
+            sql.append(" ORDER BY id_pianta DESC");
+        }
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql.toString())) {
+
+            int paramIndex = 1;
+
+            if (filter.getQuery() != null && !filter.getQuery().trim().isEmpty()) {
+                String q = "%" + filter.getQuery().trim() + "%";
+                ps.setString(paramIndex++, q);
+                ps.setString(paramIndex++, q);
+            }
+            if (filter.getIdCategoria() != null && filter.getIdCategoria() > 0) {
+                ps.setInt(paramIndex++, filter.getIdCategoria());
+            }
+            if (filter.getEsposizione() != null && !filter.getEsposizione().trim().isEmpty()) {
+                ps.setString(paramIndex++, filter.getEsposizione());
+            }
+            if (filter.getPrezzoMin() != null) {
+                ps.setDouble(paramIndex++, filter.getPrezzoMin());
+            }
+            if (filter.getPrezzoMax() != null) {
+                ps.setDouble(paramIndex++, filter.getPrezzoMax());
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Pianta p = new Pianta();
+                    p.setIdPianta(rs.getInt("id_pianta"));
+                    p.setNomeComune(rs.getString("nome_comune"));
+                    p.setNomeScientifico(rs.getString("nome_scientifico"));
+                    p.setDescrizione(rs.getString("descrizione"));
+                    p.setPrezzo(rs.getDouble("prezzo"));
+                    p.setEsposizione(rs.getString("esposizione"));
+                    p.setAltezza(rs.getDouble("altezza"));
+                    p.setDiametroVaso(rs.getDouble("diametro_vaso"));
+                    p.setQuantitaMagazzino(rs.getInt("quantita_magazzino"));
+                    p.setDisponibile(rs.getBoolean("disponibile"));
+
+                    Categoria c = new Categoria();
+                    c.setIdCategoria(rs.getInt("id_categoria"));
+                    p.setCategoria(c);
+
+                    piante.add(p);
+                }
+            }
+        }
+        return piante;
+    }
+    }
+

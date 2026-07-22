@@ -3,4 +3,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <servlet>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <servlet-class>Controller.AdminDashboardServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminDashboardServlet</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
+        <url-pattern>/admin/Dashboard</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>Controller.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>GestionePianteServlet</servlet-name>
+        <servlet-class>Controller.GestionePianteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GestionePianteServlet</servlet-name>
+        <url-pattern>/admin/GestionePiante</url-pattern>
+        <url-pattern>/admin/gestionepiante</url-pattern>
+        <url-pattern>/admin/ModificaPianta</url-pattern>
+    </servlet-mapping>
+
 </web-app>

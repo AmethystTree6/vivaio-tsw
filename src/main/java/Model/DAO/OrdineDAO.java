@@ -5,7 +5,6 @@ import Model.Beans.ItemCarrello;
 import Model.Beans.Ordine;
 import Model.Beans.Utente;
 import Model.DBConnection;
-import org.eclipse.tags.shaded.org.apache.xalan.lib.sql.ConnectionPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -111,8 +110,6 @@ public class OrdineDAO {
 
         return o;
     }
-
-
     public void salvaOrdineCompleto(int idUtente, Carrello carrello) throws SQLException {
             Connection con = null;
             PreparedStatement psOrdine = null;
@@ -205,7 +202,60 @@ public class OrdineDAO {
         }
         return storico;
     }
+    public boolean doUpdateStato(int idOrdine, String nuovoStato) throws SQLException {
+        String query = "UPDATE Ordine SET stato = ? WHERE id_ordine = ?";
 
+        try (Connection con = DBConnection.getConnection(); // Usa ConPool se il tuo metodo di connessione si chiama così
+             PreparedStatement ps = con.prepareStatement(query)) {
+
+            ps.setString(1, nuovoStato);
+            ps.setInt(2, idOrdine);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        }
+    }
+    public List<Ordine> doRetrieveAll() throws SQLException {
+        List<Ordine> ordini = new ArrayList<>();
+
+        // La query fa una JOIN tra Ordine e Utente per recuperare contemporaneamente
+        // i dati dell'ordine e le informazioni anagrafiche del cliente
+        String query = "SELECT o.id_ordine, o.data_ordine, o.stato, o.totale, " + "u.id_utente, u.nome, u.cognome, u.email, u.telefono " + "FROM Ordine o " + "JOIN Utente u ON o.id_utente = u.id_utente " + "ORDER BY o.data_ordine DESC";
+
+        try (Connection con = DBConnection.getConnection(); // Usa ConPool se la tua classe di connessione si chiama così
+             PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Ordine ordine = new Ordine();
+                ordine.setIdOrdine(rs.getInt("id_ordine"));
+
+                // Gestione della data dell'ordine (Timestamp o Date a seconda del tuo Bean)
+                java.sql.Timestamp timestamp = rs.getTimestamp("data_ordine");
+                if (timestamp != null) {
+                    ordine.setDataOrdine(new java.sql.Date(timestamp.getTime()));
+                }
+
+                ordine.setStato(rs.getString("stato"));
+                ordine.setTotale(rs.getDouble("totale"));
+
+                // Popoliamo il Bean Utente associato all'ordine
+                Utente utente = new Utente();
+                utente.setIdUtente(rs.getInt("id_utente"));
+                utente.setNome(rs.getString("nome"));
+                utente.setCognome(rs.getString("cognome"));
+                utente.setEmail(rs.getString("email"));
+                utente.setTelefono(rs.getString("telefono"));
+
+                // Colleghiamo l'utente all'ordine
+                ordine.setUtente(utente);
+
+                ordini.add(ordine);
+            }
+        }
+
+        return ordini;
+    }
 }
 
 
